@@ -1,4 +1,4 @@
--- 🔹 Total number of bookings made by each user
+-- Total number of bookings made by each user
 SELECT 
     u.user_id,
     u.name AS user_name,
@@ -10,7 +10,7 @@ JOIN
 GROUP BY 
     u.user_id, u.name;
 
--- 🔹 Rank properties based on the total number of bookings using ROW_NUMBER
+-- Rank-properties based on the total number of bookings using ROW_NUMBER
 SELECT 
     p.property_id,
     p.name AS property_name,
