@@ -1,4 +1,4 @@
--- 🔹 Initial Complex Query: Bookings with user, property, and payment details
+-- 🔹 Initial complex query with WHERE clause
 SELECT 
     b.booking_id,
     b.booking_date,
@@ -18,10 +18,14 @@ JOIN
 JOIN 
     properties p ON b.property_id = p.property_id
 LEFT JOIN 
-    payments pay ON b.booking_id = pay.booking_id;
+    payments pay ON b.booking_id = pay.booking_id
+WHERE 
+    b.booking_date >= '2024-01-01'
+AND 
+    pay.amount IS NOT NULL;
 
--- 🔍 Analyze Performance
-EXPLAIN 
+-- 🔍 Analyze performance of the original query
+EXPLAIN
 SELECT 
     b.booking_id,
     b.booking_date,
@@ -41,20 +45,13 @@ JOIN
 JOIN 
     properties p ON b.property_id = p.property_id
 LEFT JOIN 
-    payments pay ON b.booking_id = pay.booking_id;
+    payments pay ON b.booking_id = pay.booking_id
+WHERE 
+    b.booking_date >= '2024-01-01'
+AND 
+    pay.amount IS NOT NULL;
 
--- 🔧 Refactored Query for Improved Performance
--- Assumes proper indexes exist:
---   - bookings.user_id
---   - bookings.property_id
---   - payments.booking_id
---   - users.user_id
---   - properties.property_id
-
--- Refactoring includes: 
---   - Selecting only necessary fields
---   - Using indexed join columns
-
+-- 🔧 Refactored version (fewer columns + efficient filtering)
 SELECT 
     b.booking_id,
     b.booking_date,
@@ -68,4 +65,8 @@ JOIN
 JOIN 
     properties p ON b.property_id = p.property_id
 LEFT JOIN 
-    payments pay ON b.booking_id = pay.booking_id;
+    payments pay ON b.booking_id = pay.booking_id
+WHERE 
+    b.booking_date >= '2024-01-01'
+AND 
+    pay.amount IS NOT NULL;
